@@ -1,0 +1,300 @@
+/* --- TEMEL RENK PALETİ VE DEĞİŞKENLER --- */
+:root {
+    --bg: #7272c7e1;
+    --card-bg: rgba(69, 69, 194, 0.92);
+    --text: #e0e0e0;
+    
+    /* Gökkuşağı Renkleri (Giriş ve Parlamalar İçin) */
+    --clr-1: #00ff88; /* Yeşil */
+    --clr-2: #fff200; /* Sarı */
+    --clr-3: #ff9f43; /* Turuncu */
+    --clr-4: #ff4757; /* Kırmızı */
+    --clr-5: #ec4899; /* Pembe */
+    --clr-6: #8b5cf6; /* Mor */
+    --clr-7: #00d4ff; /* Mavi */
+    
+    --primary: var(--clr-7); /* Varsayılan vurgu rengi mavi olsun */
+}
+
+/* --- GENEL SIFIRLAMA --- */
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Akıcı hoverlar */
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.animating { overflow: hidden; } /* Animasyon sırasında kaydırma kapalı */
+
+/* --- GİRİŞ ANİMASYONU (INTRO) --- */
+#intro-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 1s, visibility 1s;
+}
+
+.intro-content { text-align: center; }
+
+#daktilo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+/* Daktilo imleci */
+#daktilo-text::after {
+    content: '|';
+    animation: blink 0.7s infinite;
+    color: var(--clr-1);
+}
+
+/* Harf Renkleri (JS ile atanacak ama CSS'de parlamayı kuralım) */
+.colored-letter {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+}
+
+/* Çizgi Animasyonu */
+.expand-line {
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-7));
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+}
+
+/* Animasyon Sınıfları (JS ile eklenecek) */
+.line-expanded .expand-line { width: 100%; transition: width 1.5s ease-out; }
+.logo-shrunk .intro-content { transform: scale(0.6) translateY(-150vh); transition: transform 1s ease-in; }
+.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* --- ANA SİTE TASARIMI --- */
+#main-site {
+    opacity: 0;
+    transition: opacity 1s;
+}
+#main-site.fade-in { opacity: 1; }
+
+/* Header & Logo */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+.logo span { color: var(--clr-7); text-shadow: 0 0 15px var(--clr-7); }
+
+/* Marka altındaki çizgi */
+.logo::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--clr-1), var(--clr-3), var(--clr-5), var(--clr-7));
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.slogan { font-size: 0.9rem; opacity: 0.6; margin-top: 8px; }
+/* --- MODERN INSTAGRAM BUTTON --- */
+.insta-btn {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 25px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(188, 24, 136, 0.3);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.insta-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(188, 24, 136, 0.5);
+    color: #fff;
+}
+
+/* Üzerinden geçen ışık efekti */
+.insta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s;
+}
+
+.insta-btn:hover::before {
+    left: 100%;
+}
+
+/* Ürünler Bölümü */
+.products { padding: 60px 10%; text-align: center; }
+.products h2 { font-family: 'Orbitron', sans-serif; margin-bottom: 15px; font-size: 2rem; }
+.global-note { font-size: 0.9rem; opacity: 0.5; font-style: italic; margin-bottom: 40px; }
+
+/* Ürün Grid ve Kartları */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Masaüstünde sığdırır */
+    gap: 30px;
+}
+
+.p-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    text-align: left;
+}
+
+/* Hoverla Kartın Büyümesi */
+.p-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    border-color: rgba(0, 212, 255, 0.2);
+    box-shadow: 0 15px 30px -10px rgba(0,0,0,0.5), 0 0 20px rgba(0, 212, 255, 0.1);
+}
+/* Bu kısmı mevcut .p-img kodunla değiştir */
+.p-img {
+    height: 220px;
+    width: 100%;
+    overflow: hidden; /* Resim büyüdüğünde dışarı taşmasın */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.p-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Resmi bozmadan kutuya sığdırır */
+    transition: transform 0.5s ease;
+}
+
+/* Hover efekti resme uygulansın */
+.p-card:hover .p-img img {
+    transform: scale(1.1);
+}
+.p-info { padding: 25px; }
+.p-info h3 { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-bottom: 8px; color: #fff; }
+.p-desc { font-size: 0.95rem; opacity: 0.7; margin-bottom: 20px; line-height: 1.5; height: 60px; /* Metin boyu sabitlensin */ }
+.price { display: block; font-size: 1.5rem; font-weight: 700; color: var(--clr-1); margin-bottom: 20px; }
+
+/* Sipariş Butonu */
+.order-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: var(--clr-7); /* Asıl renk */
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 12px;
+}
+
+/* Buton Hover (Daha koyu ve büyük) */
+.order-btn:hover {
+    background: #00a8cc; /* Daha koyu ton */
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+}
+
+/* --- MOBİL UYUMLULUK (Mobile Friendly) --- */
+
+@media (max-width: 768px) {
+    header { padding: 20px 5%; flex-direction: column; gap: 20px; text-align: center; }
+    .logo { font-size: 1.8rem; }
+    .products { padding: 40px 3%; }
+    
+    /* İki kart yan yana, boşluklar optimize edildi */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .p-card { border-radius: 12px; }
+    .p-img { height: 140px; } /* Mobilde resim yüksekliği */
+    .p-info { padding: 12px; }
+    .p-info h3 { font-size: 0.95rem; margin-bottom: 5px; height: 35px; overflow: hidden; }
+    .p-desc { display: none; } /* Mobilde kalabalık yapmasın diye açıklamayı gizledik */
+    .price { font-size: 1.1rem; margin-bottom: 12px; }
+    .order-btn { padding: 10px; font-size: 0.8rem; border-radius: 8px; }
+    
+    #daktilo-text { font-size: 1.8rem; letter-spacing: 2px; }
+}
+
+/* Çok küçük ekranlar için ince ayar */
+@media (max-width: 380px) {
+    .product-grid { gap: 8px; }
+    .p-info h3 { font-size: 0.85rem; }
+    .price { font-size: 1rem; }
+}
+
+/* --- AYLIZDEV FOOTER (Yeni İmza) --- */
+.aylizdev-footer {
+    width: 100%;
+    padding: 30px 10%;
+    text-align: center;
+    margin-top: auto; /* Flexbox ile en alta it */
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(5px);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.footer-line {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--clr-1), var(--clr-7));
+    margin: 0 auto 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+.aylizdev-footer p { font-size: 0.9rem; opacity: 0.6; }
+.footer-link {
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--clr-7);
+    position: relative;
+    transition: 0.3s;
+}
+
+.footer-link:hover { text-shadow: 0 0 10px var(--clr-7); opacity: 1; }
+
+@keyframes blink { 50% { opacity: 0; } }
