@@ -1,4 +1,3 @@
-
 const config = {
     brandName: "SoftKey Studio", 
     typingSpeed: 100, 
